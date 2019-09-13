@@ -33,8 +33,8 @@ if (!isProduction) app.use(errorHandler())
 mongoose.connect('mongodb://localhost/todoapp', { useNewUrlParser: true })
 mongoose.set('debug', true)
 
-require('./src/models/Todos')
-require('./src/models/Users')
+require('./src/models/Todo')
+require('./src/models/User')
 
 app.use(require('./src/routes'))
 
