@@ -5,12 +5,12 @@ const TodoSchema = new Schema({
     title: String,
     description: String,
     user: Schema.Types.ObjectId,
-    status: String
+    completed: Boolean
 }, { timestamps: true })
 
 TodoSchema.methods.toJSON = function () {
     return {
-        _id: this.id,
+        _id: this._id,
         title: this.title,
         description: this.description,
         user: this.user,
