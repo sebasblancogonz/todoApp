@@ -1,12 +1,17 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { render } from 'react-dom'
+import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
-import { store } from './redux'
+import rootReducer from './redux/reducers'
+import initialState from './redux/reducers/initialstate'
 import { App } from './components'
+import { createStore, applyMiddleware } from 'redux'
 
-ReactDOM.render(
+const store = createStore(rootReducer, initialState, applyMiddleware(thunk))
+
+render(
   <BrowserRouter>
     <Provider store={store}>
       <Switch>

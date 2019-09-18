@@ -6,14 +6,10 @@ module.exports = Object.freeze({
     ADD: 'add',
     REMOVE: 'remove',
     UPDATE: 'update',
-    
-    GET_TODOS: 'GET_TODOS',
+
+    GET_TODO_LIST: 'GET_TODO_LIST',
     ADD_TODO: 'ADD_TODO',
     TOGGLE_TODO: 'TOGGLE_TODO',
     COMPLETE_TODO: 'COMPLETE_TODO',
     DELETE_TODO: 'DELETE_TODO',
-
-    CREATE_USER: 'CREATE_USER',
-    REMOVE_USER: 'REMOVE_USER',
-    GET_USERS: 'GET_USERS',
 })

@@ -1,3 +1,8 @@
-export { default as initialstate } from './initialstate'
-export { default as newtodo } from './newtodo'
-export { default as todolist } from './todolist'
+import { combineReducers } from 'redux'
+import todos from './todos'
+import users from './todos'
+
+export default combineReducers({
+  todos,
+  users,
+})

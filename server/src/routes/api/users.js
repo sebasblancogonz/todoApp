@@ -3,8 +3,8 @@ const User = require('../../models/User')
 const constants = require('../../utils/constants')
 
 router.post('/', async (req, res) => {
-    const { username, name, lastname, birth, bio } = req.body
-
+    const { username, name, lastname, birth, bio } = req.body.user
+    
     const user = new User({
         username,
         name,
@@ -12,7 +12,7 @@ router.post('/', async (req, res) => {
         birth,
         bio,
     })
-
+    
     await user.save((err, user) => {
         if (err) return res.json(err)
         return res.json({ status: constants.STATUS_OK, userSaved: user })
