@@ -6,7 +6,6 @@ const Home = () => (
       <div className="container">
         <div className="row">
           <AddTodo />
-          <CreateUser />
         </div>
         <div className="row">
             <TodoList />

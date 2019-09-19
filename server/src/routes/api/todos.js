@@ -24,15 +24,10 @@ router.get('/:userId', async (req, res) => {
         .catch(err => {
             res.json(err)
         })
-    if ( todos.length === 0) {
-        res.json({
-            message: "There's no tasks for this user."
-        })
-    } else {
+        
         res.json({
             todos,
         })
-    }
 })
 
 router.get('/', async (req, res) => {

@@ -26,7 +26,7 @@ export class TodoList extends Component {
   render() {
     const todos = this.props.todos
     return todos.length ? (
-      <ul>
+      <ul class="progress-indicator">
         {todos && todos.map(todo => (
           <Todo {...todo} />
         ))}

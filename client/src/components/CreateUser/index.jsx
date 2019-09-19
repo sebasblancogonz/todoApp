@@ -12,10 +12,11 @@ const CreateUser = ({ dispatch }) => {
               e.preventDefault()
               let user = {
                 username: input[0].value,
-                name: input[1].value,
-                lastname: input[2].value,
-                birth: input[3].value,
-                bio: input[4].value,
+                password: input[1].value,
+                name: input[2].value,
+                lastname: input[3].value,
+                birth: input[4].value,
+                bio: input[5].value,
               }
               dispatch(createUser(user))
               input[0].value = ''
@@ -23,10 +24,15 @@ const CreateUser = ({ dispatch }) => {
               input[2].value = ''
               input[3].value = ''
               input[4].value = ''
+              input[5].value = ''
             }}
           >
             <div className="form-group">
               <label>Username</label>
+              <input className="form-control" ref={node => input.push(node)} />
+            </div>
+            <div className="form-group">
+              <label>Password</label>
               <input className="form-control" ref={node => input.push(node)} />
             </div>
             <div className="form-group">

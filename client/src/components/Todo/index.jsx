@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Todo = (todo) => (
-  <li
+  <li 
     style={{ textDecoration: todo.completed ? 'line-through ' : 'none' }}
   >
       {todo.title}, 

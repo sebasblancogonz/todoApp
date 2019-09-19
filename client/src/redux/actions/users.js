@@ -21,7 +21,7 @@ export function createUser(user) {
   console.log(user)
   return (dispatch, getState) => {
     axios
-      .post('http://localhost:3000/api/users', {
+      .post('http://localhost:3000/api/users/register', {
         user,
       })
       .then(

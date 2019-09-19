@@ -5,6 +5,7 @@ const session = require('express-session')
 const cors = require('cors')
 const errorHandler = require('errorhandler')
 const mongoose = require('mongoose')
+const jwt = require('./src/utils/jwt')
 
 mongoose.Promise = global.Promise
 
@@ -37,6 +38,8 @@ require('./src/models/Todo')
 require('./src/models/User')
 
 app.use(require('./src/routes'))
+
+app.use(jwt())
 
 app.use((req, res, next) => {
   const err = new Error('Not Found')
