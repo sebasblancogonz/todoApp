@@ -1,26 +1,50 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import axios from 'axios'
 import { Todo } from '..'
-import { getTodoList } from '../../redux/actions/todos'
+import constants from '../../utils/constants'
 
-const TodoList = ({ todos }) => {
-  return (
-    <ul>
-      {todos.map((todo) => (
-        <Todo {...todo} />
-      ))}
-    </ul>
-  )
+export class TodoList extends Component {
+  constructor(props) {
+    super(props)
+    this.handleDelete = this.handleDelete.bind(this)
+  }
+
+  componentDidMount() {
+    const { onLoad } = this.props
+    axios('http://localhost:3000/api/todos').then(res => onLoad(res.data))
+  }
+
+  handleDelete(id) {
+    const { onDelete } = this.props
+
+    return axios
+      .delete(`http://localhost:3000/api/todos/${id}`)
+      .then(() => onDelete(id))
+  }
+
+  render() {
+    const todos = this.props.todos
+    return todos.length ? (
+      <ul>
+        {todos && todos.map(todo => (
+          <Todo {...todo} />
+        ))}
+      </ul>
+    ) : <span>no hay todos!</span>
+  }
 }
 
-const mapStateToProps = state => (
-  {
+const mapStateToProps = state => ({
   todos: state.todos,
 })
 
 const mapDispatchToProps = dispatch => ({
-  todoList: () => { dispatch(getTodoList()) }
+  onLoad: data => dispatch({ type: constants.HOME_PAGE_LOADED, data }),
+  onDelete: id => dispatch({ type: constants.DELTE_TODO, id }),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodoList)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TodoList)

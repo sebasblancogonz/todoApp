@@ -2,6 +2,7 @@ module.exports = Object.freeze({
     STATUS_OK: 'OK',
     UPDATE_LIST: 'UPDATE_LIST',
     DISPLAY_INPUT_FIELD: 'DISPLAY_INPUT_FIELD',
+    HOME_PAGE_LOADED: 'HOME_PAGE_LOADED',
 
     ADD: 'add',
     REMOVE: 'remove',

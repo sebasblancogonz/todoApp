@@ -1,11 +1,31 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { addTodo } from '../../redux/actions/todos'
+import axios from 'axios'
+import constants from '../../utils/constants'
 
-const AddTodo = ({ dispatch }) => {
-  let input = []
+class AddTodo extends Component {
+  constructor(props) {
+    super(props)
 
-  return (
+    this.handleSubmitTodo = this.handleSubmitTodo.bind(this)
+  }
+
+  handleSubmitTodo(todo) {
+    const { addTodo } = this.props
+    
+    return axios
+    .post('http://localhost:3000/api/todos', {
+      todo,
+    })
+    .then(res => {
+      if(res.data.error) return console.warn(res.data.error)
+      addTodo(res.data.todoSaved)
+    })
+  }
+
+  render() {
+    let input = []
+    return (
       <div className="col-md-6">
         <form
           onSubmit={e => {
@@ -14,7 +34,7 @@ const AddTodo = ({ dispatch }) => {
               title: input[0].value,
               description: input[1].value,
             }
-            dispatch(addTodo(todo))
+            this.handleSubmitTodo(todo)
             input[0].value = ''
             input[1].value = ''
           }}
@@ -32,7 +52,16 @@ const AddTodo = ({ dispatch }) => {
           </button>
         </form>
       </div>
-  )
+    )
+  }
 }
 
-export default connect()(AddTodo)
+const mapDispatchToProps = dispatch => ({
+  addTodo: todo => dispatch({ type: constants.ADD_TODO, todo })
+})
+
+const mapStateToProps = state =>({
+  todos: state
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddTodo)

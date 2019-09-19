@@ -1,13 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { AddTodo, TodoList } from '../..'
 import CreateUser from '../../CreateUser'
 
-export class Home extends Component {
-  render() {
-    return (
+const Home = () => (
       <div className="container">
         <div className="row">
-          <AddTodo  />
+          <AddTodo />
           <CreateUser />
         </div>
         <div className="row">
@@ -15,7 +13,5 @@ export class Home extends Component {
         </div>
       </div>
     )
-  }
-}
 
 export default Home
