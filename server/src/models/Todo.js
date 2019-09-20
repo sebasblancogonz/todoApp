@@ -14,7 +14,7 @@ TodoSchema.methods.toJSON = function () {
         title: this.title,
         description: this.description,
         user: this.user,
-        status: this.status,
+        completed: this.completed,
         createdAt: this.createdAt,
         updatedAt: this.updatedAt,
     }

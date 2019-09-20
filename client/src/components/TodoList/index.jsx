@@ -25,13 +25,24 @@ export class TodoList extends Component {
 
   render() {
     const todos = this.props.todos
+    let count = 0
     return todos.length ? (
-      <ul class="progress-indicator">
-        {todos && todos.map(todo => (
-          <Todo {...todo} />
-        ))}
+      <div className="todos">
+      <ul id="progress">
+        {todos &&
+          todos.map(todo => {
+            if (count === todos.length - 1) {
+              return <Todo last={true} {...todo} />
+            } else {
+              count++
+              return <Todo {...todo} />
+            }
+          })}
       </ul>
-    ) : <span>no hay todos!</span>
+      </div>
+    ) : (
+      <span>no hay todos!</span>
+    )
   }
 }
 

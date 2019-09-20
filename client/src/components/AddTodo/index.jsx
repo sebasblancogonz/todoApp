@@ -33,6 +33,7 @@ class AddTodo extends Component {
             let todo = {
               title: input[0].value,
               description: input[1].value,
+              completed: false,
             }
             this.handleSubmitTodo(todo)
             input[0].value = ''
@@ -40,11 +41,11 @@ class AddTodo extends Component {
           }}
         >
           <div className="form-group">
-            <label>Username</label>
+            <label>Title</label>
             <input className="form-control" ref={node => input.push(node)} />
           </div>
           <div className="form-group">
-            <label>Username</label>
+            <label>Description</label>
             <input className="form-control" ref={node => input.push(node)} />
           </div>
           <button className="btn btn-primary" type="submit">
