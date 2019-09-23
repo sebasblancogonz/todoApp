@@ -1,6 +1,6 @@
 const initialstate = {
     todos: [],
-    users: []
+    user: {},
 }
 
 export default initialstate

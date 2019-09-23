@@ -1,22 +1,24 @@
 import constants from '../../utils/constants'
 
-const users = (state = [], action) => {
+const user = (state = {}, action) => {
     switch (action.type) {
         case constants.CREATE_USER:
             const { username, name, lastname, birth, bio } = action
-            return [
+            console.log(action)
+            return {
                 ...state,
-                {
+                user: {
                     username,
+                    password,
                     name,
                     lastname,
                     birth,
                     bio,
                 }
-            ]
+            }
         default:
             return state
     }
 }
 
-export default users
+export default user

@@ -50,3 +50,8 @@ li {
 .todos {
     margin-top: 2rem;
 }
+
+form{
+    margin: 0 auto;
+    width: 40%;
+}
