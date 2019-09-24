@@ -154,12 +154,11 @@ li {
 .checkmark{
   content: " ";
   display: block;
-  width: 0.5em; 
-  height: 0.8em;
+  width: 0.5em;
+  height: 1em;
   border: solid white;
-  border-width: 0 0.2em 0.2em 0; 
+  border-width: 0 0.2em 0.2em 0;
   position: absolute;
-  left: 1em;
-  top: 35%;
-  margin-top: -0.1em;
+  left: .9em;
+  top: 25%;
 }
