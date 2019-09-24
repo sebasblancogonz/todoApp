@@ -4,10 +4,9 @@ const user = (state = {}, action) => {
     switch (action.type) {
         case constants.CREATE_USER:
             const { username, name, lastname, birth, bio } = action
-            console.log(action)
             return {
                 ...state,
-                user: {
+                todo: {
                     username,
                     password,
                     name,

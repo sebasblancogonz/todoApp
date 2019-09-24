@@ -12,7 +12,7 @@ export class TodoList extends Component {
 
   componentDidMount() {
     const { onLoad } = this.props
-    axios('http://localhost:3000/api/todos').then(res => onLoad(res.data))
+    axios('http://localhost:3000/api/todos').then(res => onLoad(res.data)).catch(res => console.warn(`No data: ${res} `))
   }
 
   handleDelete(id) {
@@ -41,7 +41,7 @@ export class TodoList extends Component {
       </ul>
       </div>
     ) : (
-      <span>no hay todos!</span>
+      <span>There's no todos!</span>
     )
   }
 }

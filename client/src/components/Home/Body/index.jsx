@@ -1,16 +1,19 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { AddTodo, TodoList } from '../..'
-import CreateUser from '../../CreateUser'
+import Header from '../Header'
 
 const Home = () => (
-      <div className="container">
-        <div className="row">
-          <AddTodo />
-        </div>
-        <div className="row">
-            <TodoList />
-        </div>
+  <Fragment>
+    <Header />
+    <div className="container">
+      <div className="row">
+        <AddTodo />
       </div>
-    )
+      <div className="row">
+        <TodoList />
+      </div>
+    </div>
+  </Fragment>
+)
 
 export default Home

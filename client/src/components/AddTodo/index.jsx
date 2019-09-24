@@ -1,68 +1,95 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import axios from 'axios'
+import React, { Component, Fragment } from 'react'
 import constants from '../../utils/constants'
+import { connect } from 'react-redux'
+import { TextField, Button } from '@material-ui/core'
+import axios from 'axios'
 
 class AddTodo extends Component {
   constructor(props) {
     super(props)
 
-    this.handleSubmitTodo = this.handleSubmitTodo.bind(this)
+    this.state = {
+      title: '',
+      description: '',
+    }
+
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleSubmitTodo(todo) {
+  handleSubmit(e) {
+    e.preventDefault()
     const { addTodo } = this.props
-    
+    const { title, description } = this.state
+
+    const todo = {
+      title,
+      description,
+    }
+
     return axios
-    .post('http://localhost:3000/api/todos', {
-      todo,
-    })
-    .then(res => {
-      if(res.data.error) return console.warn(res.data.error)
-      addTodo(res.data.todoSaved)
+      .post('http://localhost:3000/api/todos', {
+        todo,
+      })
+      .then(res => {
+        if (res.data.error) return console.warn(res.data.error)
+        addTodo(res.data.todoSaved)
+      })
+  }
+
+  handleChange(key, event) {
+    this.setState({
+      [key]: event.target.value,
     })
   }
 
   render() {
-    let input = []
+    const { title, description } = this.state
     return (
-      <div className="col-md-6">
-        <form
-          onSubmit={e => {
-            e.preventDefault()
-            let todo = {
-              title: input[0].value,
-              description: input[1].value,
-              completed: false,
-            }
-            this.handleSubmitTodo(todo)
-            input[0].value = ''
-            input[1].value = ''
-          }}
-        >
-          <div className="form-group">
-            <label>Title</label>
-            <input className="form-control" ref={node => input.push(node)} />
+      <Fragment>
+        <div className="wrap-todoForm">
+          <div className="todoForm">
+            <form onSubmit={this.handleSubmit} autoComplete="off">
+              <TextField
+                value={title}
+                label="Title"
+                onChange={ev => this.handleChange('title', ev)}
+                name="title"
+                fullWidth
+                margin="normal"
+              />
+              <br />
+              <TextField
+                value={description}
+                name="description"
+                label="Description"
+                onChange={ev => this.handleChange('description', ev)}
+                margin="normal"
+                fullWidth
+                multiline
+                rowsMax="4"
+              />
+              <button className="btn btn-primary" type="submit">
+                Add Todo
+              </button>
+            </form>
           </div>
-          <div className="form-group">
-            <label>Description</label>
-            <input className="form-control" ref={node => input.push(node)} />
-          </div>
-          <button className="btn btn-primary" type="submit">
-            Add Todo
-          </button>
-        </form>
-      </div>
+        </div>
+      </Fragment>
     )
   }
 }
 
 const mapDispatchToProps = dispatch => ({
-  addTodo: todo => dispatch({ type: constants.ADD_TODO, todo })
+  onChange: todo => dispatch({ type: constants.ON_CHANGE, todo }),
+  addTodo: todo => dispatch({ type: constants.ADD_TODO, todo }),
 })
 
-const mapStateToProps = state =>({
-  todos: state
+const mapStateToProps = state => ({
+  todos: state,
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddTodo)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AddTodo)

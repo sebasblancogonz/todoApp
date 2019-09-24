@@ -32,7 +32,7 @@ class Register extends Component {
       name,
       lastname,
       bio,
-      birth
+      birth,
     }
 
     return axios
@@ -71,7 +71,11 @@ class Register extends Component {
     let step = this.state.step
     if (step < 2) {
       return (
-        <Button color="primary" onClick={this.nextStep}>
+        <Button
+          style={{ float: 'right', marginTop: '10px' }}
+          color="primary"
+          onClick={this.nextStep}
+        >
           Next
         </Button>
       )
@@ -85,8 +89,14 @@ class Register extends Component {
     if (step !== 1) {
       return (
         <Fragment>
-          <Button onClick={this.prevStep}>Back</Button>
-          <Button type="submit" color="primary">
+          <Button style={{ float: 'left', marginTop: '10px' }} onClick={this.prevStep}>
+            Back
+          </Button>
+          <Button
+            style={{ float: 'right', marginTop: '10px' }}
+            type="submit"
+            color="primary"
+          >
             Register
           </Button>
         </Fragment>
@@ -98,10 +108,10 @@ class Register extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="wrap-registerForm">
         <div className="registerForm">
-          <form onSubmit={this.handleSubmit}>
-            <br />
+          <span className="formLegend">Sign Up</span>
+          <form onSubmit={this.handleSubmit} autoComplete="off">
             <PersonalDetails
               step={this.state.step}
               handleChange={this.handleChange}
@@ -172,40 +182,38 @@ function UserDetails(props) {
   }
 
   return (
-    (
-      <Fragment>
-        <TextField
-          value={props.username}
-          label="Username"
-          onChange={ev => props.handleChange('username', ev)}
-          name="username"
-          fullWidth
-          margin="normal"
-        />
-        <br />
-        <TextField
-          value={props.password}
-          label="Password"
-          onChange={ev => props.handleChange('password', ev)}
-          name="password"
-          fullWidth
-          margin="normal"
-          type="password"
-        />
-        <br />
-        <TextField
-          value={props.bio}
-          name="bio"
-          label="Bio"
-          onChange={ev => props.handleChange('bio', ev)}
-          margin="normal"
-          fullWidth
-          multiline
-          rowsMax="4"
-        />
-        <br />
-      </Fragment>
-    )
+    <Fragment>
+      <TextField
+        value={props.username}
+        label="Username"
+        onChange={ev => props.handleChange('username', ev)}
+        name="username"
+        fullWidth
+        margin="normal"
+      />
+      <br />
+      <TextField
+        value={props.password}
+        label="Password"
+        onChange={ev => props.handleChange('password', ev)}
+        name="password"
+        fullWidth
+        margin="normal"
+        type="password"
+      />
+      <br />
+      <TextField
+        value={props.bio}
+        name="bio"
+        label="Bio"
+        onChange={ev => props.handleChange('bio', ev)}
+        margin="normal"
+        fullWidth
+        multiline
+        rowsMax="4"
+      />
+      <br />
+    </Fragment>
   )
 }
 

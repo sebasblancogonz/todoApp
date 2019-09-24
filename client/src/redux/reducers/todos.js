@@ -3,9 +3,9 @@ import constants from '../../utils/constants'
 const todos = (state = [], action) => {
   switch (action.type) {
     case constants.HOME_PAGE_LOADED:
-      return  action.data.todos
+      if (action.data.message) return [...state]
+      return action.data.todos
     case constants.ADD_TODO:
-      console.log(state)
       return [...state, action.todo]
     case constants.TOGGLE_TODO:
       return state.map(todo =>

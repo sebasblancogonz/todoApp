@@ -1,3 +1,7 @@
+/**
+ * This is going to be deleted
+ */
+
 import constants from '../../utils/constants'
 import axios from 'axios'
 
