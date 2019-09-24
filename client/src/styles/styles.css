@@ -67,6 +67,7 @@ li {
   box-shadow: -20px 22px 20px -16px rgba(0, 0, 0, 0.75);
   border-radius: 5px;
   text-align: center;
+  justify-content: space-between;
 }
 
 .wrap-registerForm {
@@ -74,6 +75,11 @@ li {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
 }
 
 .formLegend {
@@ -86,6 +92,46 @@ li {
   text-transform: none;
 }
 
+.wrap-todoForm {
+  margin-top: 10px;
+  width: 100vw;
+}
+
 .todoForm {
+  padding: 10px;
+  background-color: white;
+  width: 50%;
   margin: 0 auto;
+  border-radius: 2px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.wrapper-todo {
+  background-color: white;
+  box-shadow: 0 3px 5px rgba(0,0,0,0.19);
+  width: 50%;
+  margin-top: 20px;
+  border-radius: 3px;
+  border: 1px solid #bebebe
+}
+
+.todos{
+  width: 100%;
+}
+.todoTitle{
+  padding: 20px 0 0 35px;
+}
+.todoDesc{
+  padding: 0 20px 20px 35px;
+}
+.todoDesc p{
+  color: #afafaf;
+  font-weight: 500;
+}
+
+.dot{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #bebebe;
 }

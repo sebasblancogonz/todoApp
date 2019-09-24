@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import constants from '../../utils/constants'
+import constants from '../../../utils/constants'
 import { connect } from 'react-redux'
 import { TextField, Button } from '@material-ui/core'
 import axios from 'axios'
@@ -69,9 +69,13 @@ class AddTodo extends Component {
                 multiline
                 rowsMax="4"
               />
-              <button className="btn btn-primary" type="submit">
-                Add Todo
-              </button>
+              <Button
+                style={{ marginTop: '10px' }}
+                type="submit"
+                color="primary"
+              >
+                Add task
+              </Button>
             </form>
           </div>
         </div>

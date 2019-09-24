@@ -2,7 +2,6 @@ import React from 'react'
 import { BrowserRouter, withRouter, Switch, Route } from 'react-router-dom'
 
 import { Home, Register } from '..'
-import CreateUser from '../CreateUser'
 
 import '../../styles/styles.css'
 

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
-import { Todo } from '..'
-import constants from '../../utils/constants'
+import { TodoElement } from '..'
+import constants from '../../../utils/constants'
 
 export class TodoList extends Component {
   constructor(props) {
@@ -12,7 +12,9 @@ export class TodoList extends Component {
 
   componentDidMount() {
     const { onLoad } = this.props
-    axios('http://localhost:3000/api/todos').then(res => onLoad(res.data)).catch(res => console.warn(`No data: ${res} `))
+    axios('http://localhost:3000/api/todos')
+      .then(res => onLoad(res.data))
+      .catch(res => console.warn(`No data: ${res} `))
   }
 
   handleDelete(id) {
@@ -28,17 +30,23 @@ export class TodoList extends Component {
     let count = 0
     return todos.length ? (
       <div className="todos">
-      <ul id="progress">
-        {todos &&
-          todos.map(todo => {
-            if (count === todos.length - 1) {
-              return <Todo last={true} {...todo} />
-            } else {
-              count++
-              return <Todo {...todo} />
-            }
-          })}
-      </ul>
+          {todos &&
+            todos.map(todo => {
+              if (count === todos.length - 1) {
+                return (
+                  <div className="wrapper-todo">
+                    <TodoElement last={true} {...todo} />
+                  </div>
+                )
+              } else {
+                count++
+                return (
+                  <div className="wrapper-todo">
+                    <TodoElement {...todo} />
+                  </div>
+                )
+              }
+            })}
       </div>
     ) : (
       <span>There's no todos!</span>

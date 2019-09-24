@@ -89,14 +89,10 @@ class Register extends Component {
     if (step !== 1) {
       return (
         <Fragment>
-          <Button style={{ float: 'left', marginTop: '10px' }} onClick={this.prevStep}>
+          <Button style={{ marginTop: '10px' }} onClick={this.prevStep}>
             Back
           </Button>
-          <Button
-            style={{ float: 'right', marginTop: '10px' }}
-            type="submit"
-            color="primary"
-          >
+          <Button style={{ marginTop: '10px' }} type="submit" color="primary">
             Register
           </Button>
         </Fragment>
@@ -126,8 +122,10 @@ class Register extends Component {
               password={this.state.password}
               bio={this.state.bio}
             />
-            {this.prevBtn()}
-            {this.nextBtn()}
+            <div className={this.state.step > 1 ? "buttons" : ""}>
+              {this.prevBtn()}
+              {this.nextBtn()}
+            </div>
           </form>
         </div>
       </div>
