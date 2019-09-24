@@ -109,14 +109,14 @@ li {
 .wrapper-todo {
   background-color: white;
   box-shadow: 0 3px 5px rgba(0,0,0,0.19);
-  width: 50%;
   margin-top: 20px;
   border-radius: 3px;
   border: 1px solid #bebebe
 }
 
 .todos{
-  width: 100%;
+  display: table;
+  width: 60%;
 }
 .todoTitle{
   padding: 20px 0 0 35px;
@@ -130,8 +130,36 @@ li {
 }
 
 .dot{
+  margin-left: 30px;
+  display: inline-block;
   width: 40px;
   height: 40px;
   border-radius: 50%;
   border: 1px solid #bebebe;
+  vertical-align: middle;
+  -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+    transform: rotate(45deg);
+}
+
+.success{
+  background-color: rgb(103, 179, 103);
+}
+
+.todoData{
+  margin-left: -10px;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.checkmark{
+  content: " ";
+  display: block;
+  width: 0.5em; 
+  height: 0.8em;
+  border: solid white;
+  border-width: 0 0.2em 0.2em 0; 
+  position: absolute;
+  left: 1em;
+  top: 35%;
+  margin-top: -0.1em;
 }
