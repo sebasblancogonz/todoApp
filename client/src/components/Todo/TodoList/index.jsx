@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import { TodoElement } from '..'
@@ -34,31 +34,29 @@ export class TodoList extends Component {
   }
 
   handleDelete(id) {
-    const { onDelete, onLoad } = this.props
+    const { onDelete } = this.props
 
-    return axios.delete(`http://localhost:3000/api/todos/${id}`).then(() => {
-      onDelete(id), onLoad()
-    })
+    return axios
+      .delete(`http://localhost:3000/api/todos/${id}`)
+      .then(() => this.updateList(), onDelete(id))
   }
 
   render() {
     const todos = this.props.todos
-    let count = 0
     return todos.length ? (
-      <div className="todos">
+      <Fragment>
         {todos &&
           todos.map(todo => {
-              return (
-                <div key={todo._id} className="wrapper-todo">
-                  <TodoElement
-                    last={true}
-                    {...todo}
-                    toggleTodo={this.handleToggle}
-                  />
-                </div>
-              )
+            return (
+              <TodoElement
+                last={true}
+                {...todo}
+                onDelete={this.handleDelete}
+                toggleTodo={this.handleToggle}
+              />
+            )
           })}
-      </div>
+      </Fragment>
     ) : (
       <span>There's no todos!</span>
     )
@@ -72,7 +70,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   onLoad: data => dispatch({ type: constants.HOME_PAGE_LOADED, data }),
   toggleTodo: todo => dispatch({ type: constants.TOGGLE_TODO, todo }),
-  onDelete: id => dispatch({ type: constants.DELTE_TODO, id }),
+  onDelete: id => dispatch({ type: constants.DELETE_TODO, id }),
 })
 
 export default connect(

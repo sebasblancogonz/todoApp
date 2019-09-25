@@ -7,8 +7,9 @@ const todos = (state = [], action) => {
       return action.data.todos
     case constants.ADD_TODO:
       return [...state, action.todo]
+    case constants.DELETE_TODO:
+      return [...state.filter(todo => todo._id !== action.id)]
     case constants.TOGGLE_TODO:
-      console.log(state)
       return state.map(todo =>
         todo._id === action._id ? { ...todo, completed: !todo.completed } : todo
       )
