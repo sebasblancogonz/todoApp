@@ -5,14 +5,8 @@ import Header from '../Header'
 const Home = () => (
   <Fragment>
     <Header />
-    <div className="container">
-      <div className="row">
-        <AddTodo />
-      </div>
-      <div className="row">
-        <TodoList />
-      </div>
-    </div>
+    <AddTodo />
+    <TodoList />
   </Fragment>
 )
 

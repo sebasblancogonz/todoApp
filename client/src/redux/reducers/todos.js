@@ -8,11 +8,13 @@ const todos = (state = [], action) => {
     case constants.ADD_TODO:
       return [...state, action.todo]
     case constants.TOGGLE_TODO:
+      console.log(state)
       return state.map(todo =>
         todo._id === action._id ? { ...todo, completed: !todo.completed } : todo
       )
     case constants.GET_TODOS:
       return { ...state, todos: action.json }
+    case constants.UPDATE_LIST:
     default:
       return state
   }

@@ -47,10 +47,20 @@ router.get('/', async (req, res) => {
 })
 
 router.delete('/:todoId', async(req, res) => {
-    const { params } = req
-    await Todo.findByIdAndDelete(params.todoId, (err, todo) => {
+    const { todoId } = req.params
+    await Todo.findByIdAndDelete(todoId, (err, todo) => {
         if (err) return res.json(err)
         return res.json({ message: `ToDo ${todo.title} deleted successfully.`})
+    })
+})
+
+router.put('/:todoId', async(req, res) => {
+    const { todoId } = req.params
+
+
+    await Todo.updateOne({_id: todoId}, {$set:{ completed: true }}, (err, todo) =>{
+        if(err) return res.json(err)
+        return res.json({ message: `ToDo ${todo} modified successfully.`})
     })
 })
 

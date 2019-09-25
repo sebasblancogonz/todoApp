@@ -1,5 +1,5 @@
 const express = require('express')
-const path = require('path')
+const app = express()
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const cors = require('cors')
@@ -9,7 +9,6 @@ const jwt = require('./src/utils/jwt')
 
 mongoose.Promise = global.Promise
 
-const app = express()
 
 const isProduction = process.env.NODE_ENV === 'production'
 
