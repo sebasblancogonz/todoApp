@@ -11,6 +11,7 @@ class AddTodo extends Component {
     this.state = {
       title: '',
       description: '',
+      user: {},
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -22,10 +23,19 @@ class AddTodo extends Component {
     const { addTodo } = this.props
     const { title, description } = this.state
 
+    const user = axios.get(`http://localhost:3000/api/todos/${this.props.userId}`)
+
     const todo = {
       title,
       description,
+      user,
     }
+
+    this.setState({
+      title: '',
+      description: '',
+      user: {}
+    })
 
     return axios
       .post('http://localhost:3000/api/todos', {
@@ -52,6 +62,7 @@ class AddTodo extends Component {
             <form onSubmit={this.handleSubmit} autoComplete="off">
               <TextField
                 value={title}
+                error={this.state.noTitle ? true : false}
                 label="Title"
                 onChange={ev => this.handleChange('title', ev)}
                 name="title"
@@ -61,6 +72,7 @@ class AddTodo extends Component {
               <br />
               <TextField
                 value={description}
+                error={this.state.noDesc ? true : false}
                 name="description"
                 label="Description"
                 onChange={ev => this.handleChange('description', ev)}
@@ -73,6 +85,7 @@ class AddTodo extends Component {
                 style={{ marginTop: '10px' }}
                 type="submit"
                 color="primary"
+                disabled={!title}
               >
                 Add task
               </Button>

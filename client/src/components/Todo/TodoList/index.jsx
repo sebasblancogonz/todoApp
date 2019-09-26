@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
-import { TodoElement } from '..'
+import { TodoElement, TodoProgress } from '..'
 import constants from '../../../utils/constants'
 
 export class TodoList extends Component {
@@ -9,6 +9,13 @@ export class TodoList extends Component {
     super(props)
     this.handleDelete = this.handleDelete.bind(this)
     this.handleToggle = this.handleToggle.bind(this)
+  }
+
+  pending(todos) {
+    const completed = todos.filter(todo => {
+      if (todo.completed) return todo
+    }).length
+    return { completed, total: todos.length }
   }
 
   componentDidMount() {
@@ -45,6 +52,7 @@ export class TodoList extends Component {
     const todos = this.props.todos
     return todos.length ? (
       <Fragment>
+          <TodoProgress todos={this.pending(todos)} />
         {todos &&
           todos.map(todo => {
             return (
@@ -58,7 +66,7 @@ export class TodoList extends Component {
           })}
       </Fragment>
     ) : (
-      <span>There's no todos!</span>
+      <div className="noTodos">There's no todos!</div>
     )
   }
 }

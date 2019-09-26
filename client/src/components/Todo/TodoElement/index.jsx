@@ -5,7 +5,9 @@ class TodoElement extends Component {
     super(props)
   }
 
+
   checkMark(completed) {
+    
     if (completed) {
       return (
         <Fragment>
@@ -22,7 +24,7 @@ class TodoElement extends Component {
   render() {
     const todo = this.props
     return (
-      <div key={todo._id} className="wrapper-todo">
+      <div key={todo._id} className="wrap-todo">
         <div className={'dot ' + (todo && todo.completed ? 'success' : '')}>
           {this.checkMark(todo.completed)}
         </div>

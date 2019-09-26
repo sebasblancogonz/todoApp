@@ -1,24 +1,25 @@
-const expressjwt = require('express-jwt')
-const User = require('../models/User')
+const jwt = require('jsonwebtoken')
 
-function jwt() {
-    const secret = process.env.BIG_SECRET
-    return expressjwt({ secret, isRevoked }).unless({
-        path: [
-            '/api/users/authenticate',
-            '/api/users/register',
-        ]
+const withAuth = function(req, res, next) {
+  const token =
+    req.body.token ||
+    req.query.token ||
+    req.headers['x-access-token'] ||
+    req.cookies.token
+
+  if (!token) {
+    res.status(401).send('Unauthorized: No token provided')
+  } else {
+    jwt.verify(token, secret, function(err, decoded) {
+      console.log(token, secret, decoded)
+      if (err) {
+        res.status(401).send('Unauthorized: Invalid token')
+      } else {
+        req.id = decoded.id
+        next()
+      }
     })
+  }
 }
 
-async function isRevoked(req, payload, done) {
-    const user = await User.findById(payload.sub)
-
-    if (!user) {
-        return done(null, true)
-    }
-
-    done()
-}
-
-module.exports = jwt
+module.exports = withAuth

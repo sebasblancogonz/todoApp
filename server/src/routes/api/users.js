@@ -5,20 +5,44 @@ const bcrypt = require('bcryptjs')
 const constants = require('../../utils/constants')
 
 router.post('/login', async (req, res, next) => {
-  const { username, password } = req.body
-  const user = await User.findOne({ username })
-  if (user && bcrypt.compareSync(password, user.hash)) {
-    const { hash, ...userWithouthHash } = user.toJSON()
-    const token = jwt.sign({ sub: user.id }, process.env.BIG_SECRET)
-    return {
-      ...userWithouthHash,
-      token,
+  let errors = {}
+  const { username, password } = req.body.user
+  await User.findOne({ username }).then(user => {
+    if (!user) {
+      errors.user = 'User not found'
+      return res.status(404).json(errors)
     }
-  }
+    bcrypt.compare(password, user.hash).then(isMatch => {
+      if (isMatch) {
+        const payload = {
+          id: user._id,
+          username: user.username,
+        }
+        jwt.sign(
+          payload,
+          process.env.BIG_SECRET,
+          {
+            expiresIn: 3600,
+          },
+          (err, token) => {
+            if (err) console.error('There is some error in token', err)
+            else {
+              res.json({
+                success: true,
+                token,
+              })
+            }
+          }
+        )
+      } else {
+        errors.password = 'Incorrect password'
+        return res.json(400).json(errors)
+      }
+    })
+  })
 })
 
 router.post('/register', async (req, res) => {
-    console.log(req.body)
   const userParam = req.body.user
   const { username } = userParam
 
@@ -41,6 +65,14 @@ router.get('/', async (req, res) => {
   await User.find()
     .select('-hash')
     .then(users => res.json(users))
+})
+
+
+router.get('/:userId', async (req, res) => {
+  const { userId } = req.params
+  await User.findById(userId).then(user => {
+    res.json({ user })
+  })
 })
 
 router.get('/u/:username', async (req, res) => {

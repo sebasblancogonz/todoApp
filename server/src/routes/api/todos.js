@@ -4,6 +4,7 @@ const constants = require('../../utils/constants')
 
 router.post('/', async (req, res, next) => {
     const { title, description, user } =  req.body.todo
+    console.log(user)
 
     const todo = new Todo({
         title,
@@ -50,13 +51,12 @@ router.delete('/:todoId', async(req, res) => {
     const { todoId } = req.params
     await Todo.findByIdAndDelete(todoId, (err, todo) => {
         if (err) return res.json(err)
-        return res.json({ message: `ToDo ${todo.title} deleted successfully.`})
+        return res.json({ message: `ToDo ${todo} deleted successfully.`})
     })
 })
 
 router.put('/:todoId', async(req, res) => {
     const { todoId } = req.params
-
 
     await Todo.updateOne({_id: todoId}, {$set:{ completed: true }}, (err, todo) =>{
         if(err) return res.json(err)

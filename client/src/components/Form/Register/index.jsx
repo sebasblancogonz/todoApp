@@ -84,7 +84,7 @@ class Register extends Component {
     return null
   }
 
-  prevBtn() {
+  prevBtn(isEnabled) {
     let step = this.state.step
     if (step !== 1) {
       return (
@@ -92,7 +92,7 @@ class Register extends Component {
           <Button style={{ marginTop: '10px' }} onClick={this.prevStep}>
             Back
           </Button>
-          <Button style={{ marginTop: '10px' }} type="submit" color="primary">
+          <Button style={{ marginTop: '10px' }} type="submit" disabled={!isEnabled} color="primary">
             Register
           </Button>
         </Fragment>
@@ -103,27 +103,29 @@ class Register extends Component {
   }
 
   render() {
+    const { step, name, lastname, birth, username, password, bio} = this.state
+    const isEnabled = name && lastname && username && password
     return (
       <div className="wrap-registerForm">
         <div className="registerForm">
           <span className="formLegend">Sign Up</span>
           <form onSubmit={this.handleSubmit} autoComplete="off">
             <PersonalDetails
-              step={this.state.step}
+              step={step}
               handleChange={this.handleChange}
-              name={this.state.name}
-              lastname={this.state.lastname}
-              birth={this.state.birth}
+              name={name}
+              lastname={lastname}
+              birth={birth}
             />
             <UserDetails
-              step={this.state.step}
+              step={step}
               handleChange={this.handleChange}
-              username={this.state.username}
-              password={this.state.password}
-              bio={this.state.bio}
+              username={username}
+              password={password}
+              bio={bio}
             />
-            <div className={this.state.step > 1 ? "buttons" : ""}>
-              {this.prevBtn()}
+            <div className={step > 1 ? "buttons" : ""}>
+              {this.prevBtn(isEnabled)}
               {this.nextBtn()}
             </div>
           </form>
@@ -142,7 +144,7 @@ function PersonalDetails(props) {
     <Fragment>
       <TextField
         value={props.name}
-        label="Name"
+        label="Name*"
         onChange={ev => props.handleChange('name', ev)}
         name="name"
         fullWidth
@@ -151,7 +153,7 @@ function PersonalDetails(props) {
       <br />
       <TextField
         value={props.lastname}
-        label="Last Name"
+        label="Last Name*"
         onChange={ev => props.handleChange('lastname', ev)}
         name="lastname"
         fullWidth
@@ -183,7 +185,7 @@ function UserDetails(props) {
     <Fragment>
       <TextField
         value={props.username}
-        label="Username"
+        label="Username*"
         onChange={ev => props.handleChange('username', ev)}
         name="username"
         fullWidth
@@ -192,7 +194,7 @@ function UserDetails(props) {
       <br />
       <TextField
         value={props.password}
-        label="Password"
+        label="Password*"
         onChange={ev => props.handleChange('password', ev)}
         name="password"
         fullWidth
