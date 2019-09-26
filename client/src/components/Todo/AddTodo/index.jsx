@@ -22,13 +22,13 @@ class AddTodo extends Component {
     e.preventDefault()
     const { addTodo } = this.props
     const { title, description } = this.state
-
-    const user = axios.get(`http://localhost:3000/api/todos/${this.props.userId}`)
+    const user = {}
+    axios.get(`http://localhost:3000/api/users/${this.props.user}`).then(res => console.log(res))
 
     const todo = {
       title,
       description,
-      user,
+      user
     }
 
     this.setState({
@@ -36,7 +36,6 @@ class AddTodo extends Component {
       description: '',
       user: {}
     })
-
     return axios
       .post('http://localhost:3000/api/todos', {
         todo,

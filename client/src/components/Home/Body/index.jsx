@@ -11,6 +11,7 @@ class Home extends Component {
     super(props)
   }
   componentDidMount() {
+    const { setCurrentUser } = this.props
     if (localStorage.getItem('id_token')) {
       const { setCurrentUser, logoutUser } = this.props
       const user = jwt_decode(localStorage.id_token)

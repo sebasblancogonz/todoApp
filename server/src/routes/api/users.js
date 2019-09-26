@@ -68,10 +68,11 @@ router.get('/', async (req, res) => {
 })
 
 
-router.get('/:userId', async (req, res) => {
-  const { userId } = req.params
-  await User.findById(userId).then(user => {
-    res.json({ user })
+router.get('/:user', async (req, res) => {
+  console.log(user)
+  await User.findById(user, (err, user) => {
+    if(err) res.sendStatus(500).json({message: 'Something went wrong', error: err})
+    res.json(user)
   })
 })
 

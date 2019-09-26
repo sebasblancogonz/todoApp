@@ -5,20 +5,16 @@ import { connect } from 'react-redux'
 import { Home, Register, Login } from '..'
 
 import '../../styles/styles.css'
+import { PrivateRoute } from '../PrivateRoute'
 
-class App extends Component {
-  render() {
-    return (
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/login" component={Login} />
-          <Route path="/register" component={Register} />
-        </Switch>
-      </BrowserRouter>
-    )
-  }
-}
-
+const App = () => (
+  <BrowserRouter>
+    <Switch>
+      <PrivateRoute exact path="/" component={Home} />
+      <Route exact path="/login" component={Login} />
+      <Route path="/register" component={Register} />
+    </Switch>
+  </BrowserRouter>
+)
 
 export default withRouter(App)

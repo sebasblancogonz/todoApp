@@ -21,7 +21,7 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    if (this.props.auth) {
+    if (localStorage.getItem('user')) {
       this.props.history.push('/', this.state)
     }
   }
@@ -43,6 +43,7 @@ class Login extends Component {
         if (res.data.error) return console.warn(res.data.error)
         const { token } = res.data
         setAuthToken(token)
+        console.log(token)
         const decoded = jwt_decode(token)
         loginUser(decoded)
         if (this.props.auth) {

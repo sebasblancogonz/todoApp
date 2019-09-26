@@ -3,6 +3,7 @@ const Todo = require('../../models/Todo')
 const constants = require('../../utils/constants')
 
 router.post('/', async (req, res, next) => {
+    console.log(req.body)
     const { title, description, user } =  req.body.todo
     console.log(user)
 
