@@ -3,6 +3,8 @@ import constants from '../../../utils/constants'
 import { connect } from 'react-redux'
 import { TextField, Button } from '@material-ui/core'
 import axios from 'axios'
+import socketIOClient from 'socket.io-client'
+const socket = socketIOClient('http://localhost:3000/')
 
 class AddTodo extends Component {
   constructor(props) {
@@ -18,23 +20,27 @@ class AddTodo extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleSubmit(e) {
+  async handleSubmit(e) {
     e.preventDefault()
-    const { addTodo } = this.props
+    const { addTodo, user } = this.props
     const { title, description } = this.state
-    const user = {}
-    axios.get(`http://localhost:3000/api/users/${this.props.user}`).then(res => console.log(res))
+
+    let userData = await axios
+      .get(`http://localhost:3000/api/users/${user}`)
+      .then(res => {
+        return res.data
+      })
 
     const todo = {
       title,
       description,
-      user
+      user: userData,
     }
 
     this.setState({
       title: '',
       description: '',
-      user: {}
+      user: {},
     })
     return axios
       .post('http://localhost:3000/api/todos', {
@@ -42,6 +48,7 @@ class AddTodo extends Component {
       })
       .then(res => {
         if (res.data.error) return console.warn(res.data.error)
+        socket.io.emit('todoAdded')
         addTodo(res.data.todoSaved)
       })
   }
@@ -84,7 +91,7 @@ class AddTodo extends Component {
                 style={{ marginTop: '10px' }}
                 type="submit"
                 color="primary"
-                disabled={!title}
+                disabled={!title || !description}
               >
                 Add task
               </Button>

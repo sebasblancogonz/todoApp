@@ -1,4 +1,5 @@
 const express = require('express')
+const http = require('http')
 const app = express()
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
@@ -12,7 +13,15 @@ mongoose.Promise = global.Promise
 
 const isProduction = process.env.NODE_ENV === 'production'
 
+const server = http.createServer(app)
+const io = require('socket.io')(server)
+
+
+app.io = io;
+
+
 app.set('port', process.env.PORT || 3000)
+
 
 require('dotenv').config()
 app.use(cookieParser())
@@ -71,6 +80,6 @@ app.use((err, req, res) => {
     })
 })
 
-app.listen(app.get('port'), () => {
+server.listen(app.get('port'), () => {
     console.log(`Listening on port ${app.get('port')}`)
 })

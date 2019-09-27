@@ -67,23 +67,22 @@ router.get('/', async (req, res) => {
     .then(users => res.json(users))
 })
 
-
-router.get('/:user', async (req, res) => {
-  console.log(user)
-  await User.findById(user, (err, user) => {
+router.get('/:userId', async (req, res) => {
+  const userId = req.params.userId
+  await User.findById(userId, (err, user) => {
     if(err) res.sendStatus(500).json({message: 'Something went wrong', error: err})
-    res.json(user)
+    return res.json(user)
   })
 })
 
-router.get('/u/:username', async (req, res) => {
+router.post('/u/:username', async (req, res) => {
   const { params } = req
   await User.find({ username: params.username }).then(user => {
     res.json({ user: user })
   })
 })
 
-router.put('/id/:userId', async (req, res) => {
+router.post('/id/:userId', async (req, res) => {
   const { params } = req
   await User.findByIdAndUpdate(params.userId, (err, user) => {
     if (err) return res.json(err)

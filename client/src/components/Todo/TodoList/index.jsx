@@ -3,10 +3,12 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 import { TodoElement, TodoProgress } from '..'
 import constants from '../../../utils/constants'
-
+import socketIOClient from 'socket.io-client'
+const socket = socketIOClient('http://localhost:3000/')
 export class TodoList extends Component {
   constructor(props) {
     super(props)
+
     this.handleDelete = this.handleDelete.bind(this)
     this.handleToggle = this.handleToggle.bind(this)
   }
@@ -20,14 +22,25 @@ export class TodoList extends Component {
 
   componentDidMount() {
     const { onLoad } = this.props
-    axios('http://localhost:3000/api/todos')
-      .then(res => onLoad(res.data))
+    socket.on('todos', data => {
+      console.log(data.todos),
+      onLoad(data.todos)
+    })
+    axios(`http://localhost:3000/api/todos/u/${this.props.user}`)
+      .then(res => {
+        onLoad(res.data)
+      })
       .catch(res => console.warn(`No data: ${res} `))
   }
 
   updateList() {
     const { onLoad } = this.props
-    return axios('http://localhost:3000/api/todos')
+    const socket = socketIOClient.connect('http://localhost:3000/')
+    console.log(socket)
+    socket.on('todos', todos => {
+      onLoad(todos)
+    })
+    return axios(`http://localhost:3000/api/todos/u/${this.props.user}`)
       .then(res => onLoad(res.data))
       .catch(res => console.warn(`No data: ${res} `))
   }
@@ -52,7 +65,7 @@ export class TodoList extends Component {
     const todos = this.props.todos
     return todos.length ? (
       <Fragment>
-          <TodoProgress todos={this.pending(todos)} />
+        <TodoProgress todos={this.pending(todos)} />
         {todos &&
           todos.map(todo => {
             return (

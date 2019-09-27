@@ -9,7 +9,7 @@ const setAuthToken = token => {
 }
 
 export const isAuthenticated = userId => {
-    if(localStorage.getItem('user')._id === userId) return true
+    if(JSON.parse(localStorage.getItem('user')).id === userId) return true
 }
 
 export default setAuthToken

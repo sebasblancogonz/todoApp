@@ -11,10 +11,9 @@ class Home extends Component {
     super(props)
   }
   componentDidMount() {
-    const { setCurrentUser } = this.props
+    const {  setCurrentUser, logoutUser } = this.props
     if (localStorage.getItem('id_token')) {
-      const { setCurrentUser, logoutUser } = this.props
-      const user = jwt_decode(localStorage.id_token)
+      const user = jwt_decode(localStorage.getItem('id_token'))
       const currentTime = Date.now() / 1000
       if (user.exp < currentTime) {
         localStorage.removeItem('id_token')
@@ -30,7 +29,7 @@ class Home extends Component {
   }
 
   getUser() {
-    const user = jwt_decode(localStorage.id_token)
+    const user = JSON.parse(localStorage.getItem('user'))
     return user.id
   }
 
