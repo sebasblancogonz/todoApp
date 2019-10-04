@@ -1,5 +1,7 @@
 const express = require('express')
-const path = require('path')
+const http = require('http')
+const app = express()
+const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const cors = require('cors')
@@ -8,13 +10,21 @@ const mongoose = require('mongoose')
 
 mongoose.Promise = global.Promise
 
-const app = express()
 
 const isProduction = process.env.NODE_ENV === 'production'
 
+const server = http.createServer(app)
+const io = require('socket.io')(server)
+
+
+app.io = io;
+
+
 app.set('port', process.env.PORT || 3000)
 
+
 require('dotenv').config()
+app.use(cookieParser())
 app.use(cors())
 app.use(require('morgan')('dev'))
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -33,8 +43,8 @@ if (!isProduction) app.use(errorHandler())
 mongoose.connect('mongodb://localhost/todoapp', { useNewUrlParser: true })
 mongoose.set('debug', true)
 
-require('./src/models/Todos')
-require('./src/models/Users')
+require('./src/models/Todo')
+require('./src/models/User')
 
 app.use(require('./src/routes'))
 
@@ -70,6 +80,6 @@ app.use((err, req, res) => {
     })
 })
 
-app.listen(app.get('port'), () => {
+server.listen(app.get('port'), () => {
     console.log(`Listening on port ${app.get('port')}`)
 })
